@@ -6,6 +6,7 @@ pygame.display.set_caption("First Game")
 
 walkRight = [pygame.image.load('standing2.png'),pygame.image.load('standing3.png'), pygame.image.load('standing2.png'), pygame.image.load('standing.png'),pygame.image.load('standing2.png'), pygame.image.load('standing3.png')]
 #walkLeft = [pygame.image.load('L1.png'), pygame.image.load('L2.png'), pygame.image.load('L3.png'), pygame.image.load('L4.png'), pygame.image.load('L5.png'), pygame.image.load('L6.png'), pygame.image.load('L7.png'), pygame.image.load('L8.png'), pygame.image.load('L9.png')]
+jumpUp = [pygame.image.load('jump2.png'), pygame.image.load('jump3.png'), pygame.image.load('jump4.png')]
 bg = pygame.image.load('BACKGROUND.png')
 
 char = pygame.image.load('standing.png')
@@ -31,13 +32,13 @@ def redrawGameWindow():
     win.blit(bg, (0,0))  
     if walkCount + 1 >= 5:
         walkCount = 0
-        
     #if left:  
         #win.blit(walkLeft[walkCount//3], (x,y))
         #walkCount += 1                          
     if right:
         win.blit(walkRight[walkCount], (x,y))
         walkCount += 1
+        
     else:
         win.blit(char, (x, y))
         walkCount = 0
@@ -50,14 +51,12 @@ run = True
 
 while run:
     clock.tick(9)
-    
-    #background_image = pygame.image.load("city.png"); #load an image
 
-    for event in pygame.event.get():
+    for event in pygame.event.get(): #DETECTS INTERRUPT AND CLOSES THE WINDOW
         if event.type == pygame.QUIT:
             run = False
 
-    keys = pygame.key.get_pressed()
+    keys = pygame.key.get_pressed() #CHECKS IF KEYS HAVE BEEN PRESSED
     
     if keys[pygame.K_LEFT] and x > vel: 
         x -= vel
@@ -83,10 +82,12 @@ while run:
     else:
         if jumpCount >= -10:
             y -= (jumpCount * abs(jumpCount)) * 0.5
-            jumpCount -= 1
+            jumpCount -= 2
         else: 
             jumpCount = 10
+            #win.blit(jumpUp[jumpCount], (x,y))
             isJump = False
+
 
     redrawGameWindow() 
     
